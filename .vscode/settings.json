@@ -1,0 +1,7 @@
+{
+    "python.defaultInterpreterPath": "/home/konstantin/Desktop/flaskBasics/venv/bin/python3",
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.autopep8"
+    },
+    "python.formatting.provider": "none"
+}
