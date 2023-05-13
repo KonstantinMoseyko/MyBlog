@@ -1,4 +1,7 @@
+import os
 from flask import Flask, render_template
+from flask_migrate import Migrate
+from dotenv import load_dotenv
 from blog.views.users import users_app
 from blog.views.articles import articles_app
 from blog.views.auth import login_manager, auth_app
@@ -6,8 +9,10 @@ from blog.models.database import db
 from blog import commands
 
 
-app = Flask(__name__)
+load_dotenv()
 
+app = Flask(__name__)
+migrate = Migrate(app, db, compare_type=True)
 
 @app.route("/")
 def index():
@@ -20,8 +25,9 @@ app.register_blueprint(auth_app, url_prefix="/auth")
 app.cli.add_command(commands.init_db)
 app.cli.add_command(commands.create_users)
 
-app.config["SECRET_KEY"] = "abcdefg123456"
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:////tmp/blog.db"
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+cfg_name = os.getenv("CONFIG_NAME") or "ProductionConfig"
+
+app.config.from_object(f"blog.config.{cfg_name}")
 db.init_app(app)
 login_manager.init_app(app)
