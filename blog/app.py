@@ -26,7 +26,7 @@ app.register_blueprint(auth_app, url_prefix="/auth")
 app.register_blueprint(authors_app, url_prefix="/authors")
 
 app.cli.add_command(commands.create_admin)
-
+app.cli.add_command(commands.create_tags)
 
 cfg_name = os.getenv("CONFIG_NAME") or "ProductionConfig"
 
