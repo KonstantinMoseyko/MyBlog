@@ -9,6 +9,7 @@ from blog.views.authors import authors_app
 from blog.models.database import db
 from blog import commands
 from blog.security import flask_bcrypt
+from blog.admin import admin
 
 
 load_dotenv()
@@ -34,3 +35,4 @@ app.config.from_object(f"blog.config.{cfg_name}")
 db.init_app(app)
 login_manager.init_app(app)
 flask_bcrypt.init_app(app)
+admin.init_app(app)

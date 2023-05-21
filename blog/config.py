@@ -11,6 +11,7 @@ class BaseConfig(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY = os.getenv('SECRET_KEY')
     WTF_CSRF_ENABLED = True
+    FLASK_ADMIN_SWATCH = 'cosmo'
     
 class DevConfig(BaseConfig):
     DEBUG = True
