@@ -2,6 +2,7 @@ import os
 from flask import Flask, render_template
 from flask_migrate import Migrate
 from dotenv import load_dotenv
+
 from blog.views.users import users_app
 from blog.views.articles import articles_app
 from blog.views.auth import login_manager, auth_app
@@ -10,6 +11,7 @@ from blog.models.database import db
 from blog import commands
 from blog.security import flask_bcrypt
 from blog.admin import admin
+from blog.api import init_api
 
 
 load_dotenv()
@@ -36,3 +38,5 @@ db.init_app(app)
 login_manager.init_app(app)
 flask_bcrypt.init_app(app)
 admin.init_app(app)
+
+api = init_api(app)
