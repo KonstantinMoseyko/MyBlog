@@ -11,6 +11,7 @@ class UserList(ResourceList):
     data_layer = {
         "session": db.session,
         "model": User,
+        "permission_get": [UserPermission],
     }
 
 
