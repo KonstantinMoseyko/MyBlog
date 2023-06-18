@@ -31,24 +31,26 @@ def create_article():
     error = None
     form = CreateArticleForm(request.form)
     form.tags.choices = [(tag.id, tag.name) for tag in Tag.query.order_by("name")]
+    
     if request.method == "POST" and form.validate_on_submit():
         article = Article(title=form.title.data.strip(), body=form.body.data)
-        if form.tags.data: # если в форму были переданы теги (были выбраны)
-            selected_tags = Tag.query.filter(Tag.id.in_(form.tags.data))
-            for tag in selected_tags:
-                article.tags.append(tag) # добавляем выбранные теги к статье
         
-        
-        db.session.add(article)
         if current_user.author:
             # use existing author if present
-            article.author = current_user.author
+            article.author_id = current_user.author.id
         else:
             # otherwise create author record
             author = Author(user_id=current_user.id)
             db.session.add(author)
             db.session.flush()
-            article.author = current_user.author
+            article.author_id = author.id
+        
+        if form.tags.data: # если в форму были переданы теги (были выбраны)
+            selected_tags = Tag.query.filter(Tag.id.in_(form.tags.data))
+            for tag in selected_tags:
+                article.tags.append(tag) # добавляем выбранные теги к статье
+        
+        db.session.add(article)
         
         try:
             db.session.commit()
