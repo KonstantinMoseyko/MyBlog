@@ -32,8 +32,8 @@ app.cli.add_command(commands.create_admin)
 app.cli.add_command(commands.create_tags)
 
 cfg_name = os.getenv("CONFIG_NAME") or "ProductionConfig"
-
 app.config.from_object(f"blog.config.{cfg_name}")
+
 db.init_app(app)
 login_manager.init_app(app)
 flask_bcrypt.init_app(app)

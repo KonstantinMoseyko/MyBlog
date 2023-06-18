@@ -11,14 +11,16 @@ def create_admin():
     > created admin: <User #1 'admin'>
     """
     from blog.models import User
+    from blog.app import app
     
-    admin = User(username="admin", is_staff=True)
-    admin.password = os.getenv("ADMIN_PASSWORD") or "adminpass"
-    
-    db.session.add(admin)
-    db.session.commit()
-    
-    print("created admin:", admin)
+    with app.app_context():
+        admin = User(username="admin", is_staff=True)
+        admin.password = os.getenv("ADMIN_PASSWORD") or "adminpass"
+        
+        db.session.add(admin)
+        db.session.commit()
+        
+        print("created admin:", admin)
 
 @click.command("create-tags")
 def create_tags():
@@ -27,15 +29,18 @@ def create_tags():
     ➜ flask create-tags
     """
     from blog.models import Tag
-    for name in [
-        "flask",
-        "django",
-        "python",
-        "sqlalchemy",
-        "news",
-    ]:
-        tag = Tag(name=name)
-        db.session.add(tag)
-    db.session.commit()
-    print("created tags")      
+    from blog.app import app
+    
+    with app.app_context():
+        for name in [
+            "flask",
+            "django",
+            "python",
+            "sqlalchemy",
+            "news",
+        ]:
+            tag = Tag(name=name)
+            db.session.add(tag)
+        db.session.commit()
+        print("created tags")      
      
