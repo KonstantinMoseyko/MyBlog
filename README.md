@@ -23,15 +23,17 @@ cp .env.template .env
 ```shell
 source venv/bin/activate
 ```
-5. install dependencies
+5. Установите зависимости
 ```shell
 pip install -r requirements.txt
 ```
-6. Инициализируйте БД и создайте миграции
+6. Инициализируйте БД и создайте миграции. Создадим теги для статей и дефолтного админа.
 ```shell
 flask db init
 flask db migrate
 flask db upgrade
+flask create-tags
+flask create-admin
 ```
 7. Запустите приложение
 ```shell
