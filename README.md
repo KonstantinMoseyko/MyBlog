@@ -13,7 +13,7 @@ git clone https://github.com/KonstantinMoseyko/MyBlog.git
 ```
 2. Создайте виртуальное окружение
 ```shell
-python3 -m venv ./venv
+virtualenv -p python3 venv
 ```
 3. Скопируйте и переименуйте .env.template в .env
 ```sh
